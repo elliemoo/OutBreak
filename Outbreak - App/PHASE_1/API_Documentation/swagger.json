@@ -1,0 +1,398 @@
+openapi: 3.0.0
+info:
+  description: |
+    I'm using this as a template
+    
+    You can find
+    out more about Swagger at
+    [http://swagger.io](http://swagger.io) or on
+    [irc.freenode.net, #swagger](http://swagger.io/irc/).
+  version: "1.0.0"
+  title: Outbreaks Global Incident Map API
+  termsOfService: 'http://swagger.io/terms/'
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/AlvinRC/OutbreaksAPI/1.0.0
+  - url: 'https://6u977749j2.execute-api.ap-southeast-2.amazonaws.com/staging/'
+tags:
+  - name: reports
+    description: Search reports based on the filters provided
+    externalDocs:
+      description: Find out more
+      url: 'http://swagger.io'
+  - name: auth
+    description: User Auth Operations
+    externalDocs:
+      description: Login here!
+      url: 'http://swagger.io'
+paths:
+  /reports/:
+    get:
+      tags:
+        - reports
+      summary: Get report based on filters specified
+      description: You must provide at least one of the period of interest, key terms, or location query parameters
+      operationId: getReports
+      parameters:
+        # - name: period
+        #   in: query
+        #   description: Response will consist of results filtered only by the provided date range
+        #   required: false
+        #   explode: false
+        #   schema:
+        #     $ref: '#/components/schemas/Period'
+        #   #TODO: DO regex for this
+        - name: start_date
+          in: query
+          description: You must provide either both or neither of start_date and end_date
+          required: false
+          explode: false
+          schema: 
+            type: string
+            example: "2021-03-08T16:22:00"
+        - name: end_date
+          in: query
+          description: You must provide either both or neither of start_date and end_date
+          required: false
+          explode: false
+          schema: 
+            type: string
+            example: "2021-03-10T16:22:00"
+        - name: location
+          in: query
+          description: Response will consist of results filtered only by the provided location
+          required: false
+          explode: false
+          schema:
+            type: string
+          example: australia
+        - name: terms
+          in: query
+          description: Response will consist of results filtered only by the provided terms
+          required: false
+          explode: true
+          schema:
+            type: array
+            items: 
+              type: string
+            example: [fever]
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Article'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Article'
+        '400':
+          description: Invalid or missing search parameters (Bad Period)
+        '404':
+          description: Report not found
+      security:
+        - report_auth:
+            - 'write:pets'
+            - 'read:pets'
+            
+  '/reports/disease/':
+    get:
+      tags:
+        - reports
+      summary: Get report based on disease specified
+      operationId: getReportByDisease
+      parameters:
+        - name: disease
+          in: query
+          description: Response will consist of results filtered only by the provided disease
+          required: true
+          explode: false
+          schema:
+            type: string
+          example: "COVID-19"
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Article'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Article'
+        '400':
+          description: Invalid search parameters specified (Bad disease)
+        '404':
+          description: Report not found
+      security:
+        - report_auth:
+            - 'write:pets'
+            - 'read:pets'
+            
+  '/reports/syndrome/':
+    get:
+      tags:
+        - reports
+      summary: Get report based on syndrome specified
+      operationId: getReportBySyndrome
+      parameters:
+        - name: syndrome
+          in: query
+          description: Response will consist of results filtered only by the provided syndrome
+          required: true
+          explode: false
+          schema:
+            type: string
+          example: encephalitis
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Article'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Article'
+        '400':
+          description: Invalid search parameters specified (Bad syndrome)
+        '404':
+          description: Report not found
+      security:
+        - report_auth:
+            - 'write:pets'
+            - 'read:pets'
+
+  /auth/login:
+    post:
+      tags:
+        - auth
+      summary: User login
+      operationId: loginUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Auth'
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            X-Rate-Limit:
+              description: calls per hour allowed by the user
+              schema:
+                type: integer
+                format: int32
+            X-Expires-After:
+              description: date in UTC when token expires
+              schema:
+                type: string
+                format: date-time
+          content:
+            application/json:
+              schema:
+                type: string
+                example: APIKey
+            application/xml:
+              schema:
+                type: string
+                example: APIKey
+        '400':
+          description: Invalid username/password supplied
+  /auth/logout:
+    post:
+      tags:
+        - auth
+      summary: User Logout
+      operationId: logoutUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Auth'
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            X-Rate-Limit:
+              description: calls per hour allowed by the user
+              schema:
+                type: integer
+                format: int32
+            X-Expires-After:
+              description: date in UTC when token expires
+              schema:
+                type: string
+                format: date-time
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+        '400':
+          description: Invalid username/password supplied
+externalDocs:
+  description: Find out more about Swagger
+  url: 'http://swagger.io'
+components:
+  schemas:
+    Period:
+      type: object
+      properties:
+        start_date:
+          type: string
+          format: date-time
+          example: "2015-10-01T08:45:10"
+        end_date:
+          type: string
+          format: date-time
+          example: "2015-11-01T19:37:12"
+    Disease:
+      type: string
+      example: listeriosis
+    Syndrome:
+      type: string
+      example: Haemorrhagic Fever
+    Date: 
+      type: string #not sure whether we comment this out
+      oneOf:
+        - $ref: '#/components/schemas/DateExact'
+        - $ref: '#/components/schemas/DateRange'
+    DateExact:
+      type: string
+      pattern: ^(\d{4})-(\d\d|xx)-(\d\d|xx) (\d\d|xx):(\d\d|xx):(\d\d|xx)$
+      example: 
+        2018-xx-xx xx:xx:xx 
+        #2018-11-01 xx:xx:xx
+        #2018-11-xx 17:00:xx
+    DateRange:
+      type: string
+      pattern: ^(\d{4})-(\d\d|xx)-(\d\d|xx) (\d\d|xx):(\d\d|xx):(\d\d|xx) to (\d{4})-(\d\d|xx)-(\d\d|xx) (\d\d|xx):(\d\d|xx):(\d\d|xx)$
+      example: 
+        2018-xx-xx xx:xx:xx to 2019-xx-xx xx:xx:xx
+        #2018-11-01 17:xx:xx to 2018-12-xx xx:xx:xx
+        #NOTE: 2018-xx-xx xx:xx:xx to 2017-xx-xx xx:xx:xx works
+        #(the first date is later than the second date) - TODO: FIX
+    Location: 
+      type: object
+      oneOf:
+        - $ref: '#/components/schemas/LocationBasic'
+        - $ref: '#/components/schemas/LocationAdvanced'
+    LocationBasic:
+      type: object
+      properties:
+        country:
+          type: string
+          example: Australia
+        location:
+          type: string
+          example: Sydney, NSW
+    LocationAdvanced:
+      type: object
+      oneOf:
+        - $ref: '#/components/schemas/LocationAdvancedGeonames'
+        - $ref: '#/components/schemas/LocationAdvancedGoogle'
+    LocationAdvancedGeonames:
+      type: object
+      properties:
+        geonames_id:
+          type: number
+    LocationAdvancedGoogle:
+      type: object
+      properties:
+        google_id:
+          type: number
+    Report:
+      type: object
+      properties:
+        diseases:
+          type: array
+          items: 
+            $ref: '#/components/schemas/Disease'
+        syndromes:
+          type: array
+          items: 
+             $ref: '#/components/schemas/Syndrome'
+        event_date:
+          $ref: '#/components/schemas/Date'
+          
+        locations:
+          $ref: '#/components/schemas/Location'
+
+    Article:
+      type: object
+      properties:
+        url: 
+          type: string
+          example: https://www.who.int/csr/don/17-january-2020-novel-coronavirus-japan-exchina/en/
+        date_of_publication:
+          type: string
+          format: date-time
+          example: "2015-07-20T15:49:04-07:00"
+        headline: 
+          type: string
+          example: Novel Coronavirus – Japan (ex-China)
+        maintext: 
+          type: string
+          example: "On 15 January 2020, the Ministry of Health, Labour and Welfare, Japan (MHLW) reported an imported case of laboratory-confirmed 2019-novel coronavirus (2019-nCoV) from Wuhan, Hubei Province, China. The case-patient is male, between the age of 30-39 years, living in Japan. The case-patient travelled to Wuhan, China in late December and developed fever on 3 January 2020 while staying in Wuhan. He did not visit the Huanan Seafood Wholesale Market or any other live animal markets in Wuhan. He has indicated that he was in close contact with a person with pneumonia. On 6 January, he traveled back to Japan and tested negative for influenza when he visited a local clinic on the same day"
+        reports:
+          type: array
+          items:
+            $ref: '#/components/schemas/Report'
+          
+      xml:
+        name: report
+    Auth:
+      type: object
+      properties:
+        username:
+          type: string
+          example: admin
+        password:
+          type: string
+          example: pass
+      
+    ApiResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        type:
+          type: string
+        message:
+          type: string
+  #requestBodies:
+  securitySchemes:
+    report_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: 'http://petstore.swagger.io/oauth/dialog'
+          scopes:
+            'write:pets': modify reports in your account
+            'read:pets': read your reports
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header

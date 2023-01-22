@@ -1,0 +1,99 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-gitpushforce-staging-15618-authRole",
+      "UnauthRoleArn": "arn:aws:iam::675954207968:role/amplify-gitpushforce-staging-15618-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::675954207968:role/amplify-gitpushforce-staging-15618-authRole",
+      "Region": "ap-southeast-2",
+      "DeploymentBucketName": "amplify-gitpushforce-staging-15618-deployment",
+      "UnauthRoleName": "amplify-gitpushforce-staging-15618-unauthRole",
+      "StackName": "amplify-gitpushforce-staging-15618",
+      "StackId": "arn:aws:cloudformation:ap-southeast-2:675954207968:stack/amplify-gitpushforce-staging-15618/23553110-82d6-11eb-84eb-06644fc2f524",
+      "AmplifyAppId": "d37439p3nmaoqs"
+    },
+    "categories": {
+      "function": {
+        "reportsfunction": {
+          "deploymentBucketName": "amplify-gitpushforce-staging-15618-deployment",
+          "s3Key": "amplify-builds/reportsfunction-64703757653444775335-build.zip"
+        },
+        "scrapylayer": {
+          "deploymentBucketName": "amplify-gitpushforce-staging-15618-deployment",
+          "s3Key": "amplify-builds/scrapylayer-build.zip"
+        },
+        "amplifyscrapy": {
+          "deploymentBucketName": "amplify-gitpushforce-staging-15618-deployment",
+          "s3Key": "amplify-builds/amplifyscrapy-446f3169346179707757-build.zip"
+        },
+        "boto3": {
+          "deploymentBucketName": "amplify-gitpushforce-staging-15618-deployment",
+          "s3Key": "amplify-builds/boto3-build.zip"
+        },
+        "diseasesearch": {
+          "deploymentBucketName": "amplify-gitpushforce-staging-15618-deployment",
+          "s3Key": "amplify-builds/diseasesearch-4a61386e7a3464494955-build.zip"
+        },
+        "syndromesearch": {
+          "deploymentBucketName": "amplify-gitpushforce-staging-15618-deployment",
+          "s3Key": "amplify-builds/syndromesearch-30655141496275727265-build.zip"
+        },
+        "loadreports": {
+          "deploymentBucketName": "amplify-gitpushforce-staging-15618-deployment",
+          "s3Key": "amplify-builds/loadreports-674d6a4b5a5751675576-build.zip"
+        }
+      }
+    },
+    "nonCFNdata": {
+      "function": {
+        "scrapylayer": {
+          "layerVersionMap": {
+            "1": {
+              "permissions": [
+                {
+                  "type": "private"
+                }
+              ],
+              "hash": "0s5lFk1TEJd5fuM/PtFj3kT/Fw15MjOKbWtsCRjRQuc="
+            },
+            "2": {
+              "permissions": [
+                {
+                  "type": "private"
+                }
+              ],
+              "hash": "NbVFCv+23w/xfDbn1gClTbtJBf3Pd9Ja9K2g8nAO8/Q="
+            },
+            "3": {
+              "permissions": [
+                {
+                  "type": "private"
+                }
+              ],
+              "hash": "J8OIHuhyCmUCRxD9q/jnWW+OAN9CGLZRTxtqcdxeVOk="
+            },
+            "4": {
+              "permissions": [
+                {
+                  "type": "private"
+                }
+              ],
+              "hash": "/edK/z7hBTOa6G4siQTuyDEgiMhLWGBomr3DmYUyImw="
+            }
+          }
+        },
+        "boto3": {
+          "layerVersionMap": {
+            "1": {
+              "permissions": [
+                {
+                  "type": "private"
+                }
+              ],
+              "hash": "ZEzItyLOFdtMY9WQefxcRWKq/pKBjQ7I/V9Qxh2x4W8="
+            }
+          }
+        }
+      }
+    }
+  }
+}

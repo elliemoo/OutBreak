@@ -1,0 +1,5 @@
+{
+    "tableName": "outbreaksDatabaseNew",
+    "partitionKeyName": "id",
+    "partitionKeyType": "S"
+}

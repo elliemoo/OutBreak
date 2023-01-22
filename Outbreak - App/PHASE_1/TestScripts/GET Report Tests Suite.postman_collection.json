@@ -1,0 +1,1551 @@
+{
+	"info": {
+		"_postman_id": "6e3b4b9f-d75a-498c-85a0-05bde94ebef7",
+		"name": "GET Report Tests Suite",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Code 403: Forbidden",
+			"item": [
+				{
+					"name": "Query API Lambda URL",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Test \", () => {\r",
+									"    //errors array is empty\r",
+									"    pm.collectionVariables.set(\"variable_key\", \"variable_value\");\r",
+									"    pm.sendRequest(\"https://6u977749j2.execute-api.ap-southeast-2.amazonaws.com/staging/reports?terms=fever\", function (err, response) {\r",
+									"        console.log(response.json());\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://6u977749j2.execute-api.ap-southeast-2.amazonaws.com/staging/",
+							"protocol": "https",
+							"host": [
+								"6u977749j2",
+								"execute-api",
+								"ap-southeast-2",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"staging",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Query API Base URL",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://6u977749j2.execute-api.ap-southeast-2.amazonaws.com/",
+							"protocol": "https",
+							"host": [
+								"6u977749j2",
+								"execute-api",
+								"ap-southeast-2",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"const jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Valid Response\", function () {",
+							"     pm.response.to.be.forbidden;",
+							"});",
+							"pm.test(\"Is Object\", () => {",
+							"    //errors array is empty",
+							"    pm.expect(jsonData).to.be.an('object');",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Code 404: Not Found",
+			"item": [
+				{
+					"name": "Search Reports based on Terms &OR Period &OR Location",
+					"item": [
+						{
+							"name": "No Results Found Period",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://6u977749j2.execute-api.ap-southeast-2.amazonaws.com/staging/reports?start_date=1021-03-09T13:07:00&end_date=1021-03-09T13:07:00",
+									"protocol": "https",
+									"host": [
+										"6u977749j2",
+										"execute-api",
+										"ap-southeast-2",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"staging",
+										"reports"
+									],
+									"query": [
+										{
+											"key": "start_date",
+											"value": "1021-03-09T13:07:00"
+										},
+										{
+											"key": "end_date",
+											"value": "1021-03-09T13:07:00"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "No Results Found Terms",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://6u977749j2.execute-api.ap-southeast-2.amazonaws.com/staging/reports?terms=a",
+									"protocol": "https",
+									"host": [
+										"6u977749j2",
+										"execute-api",
+										"ap-southeast-2",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"staging",
+										"reports"
+									],
+									"query": [
+										{
+											"key": "terms",
+											"value": "a"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "No Results Found Location",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://6u977749j2.execute-api.ap-southeast-2.amazonaws.com/staging/reports?location=a",
+									"protocol": "https",
+									"host": [
+										"6u977749j2",
+										"execute-api",
+										"ap-southeast-2",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"staging",
+										"reports"
+									],
+									"query": [
+										{
+											"key": "location",
+											"value": "a"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "No Results Found Terms & Location & Period",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://6u977749j2.execute-api.ap-southeast-2.amazonaws.com/staging/reports?terms=fever%2Cinfection&location=sydney&start_date=2020-06-15T00%3A00%3A00&end_date=2021-01-21T00%3A00%3A00",
+									"protocol": "https",
+									"host": [
+										"6u977749j2",
+										"execute-api",
+										"ap-southeast-2",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"staging",
+										"reports"
+									],
+									"query": [
+										{
+											"key": "terms",
+											"value": "fever%2Cinfection"
+										},
+										{
+											"key": "location",
+											"value": "sydney"
+										},
+										{
+											"key": "start_date",
+											"value": "2020-06-15T00%3A00%3A00"
+										},
+										{
+											"key": "end_date",
+											"value": "2021-01-21T00%3A00%3A00"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Search Reports based on Disease",
+					"item": [
+						{
+							"name": "No Results Found Disease",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://6u977749j2.execute-api.ap-southeast-2.amazonaws.com/staging/reports/disease/?disease=a",
+									"protocol": "https",
+									"host": [
+										"6u977749j2",
+										"execute-api",
+										"ap-southeast-2",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"staging",
+										"reports",
+										"disease",
+										""
+									],
+									"query": [
+										{
+											"key": "disease",
+											"value": "a"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Search Reports based on Syndrome",
+					"item": [
+						{
+							"name": "No Results Found Syndrome",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://6u977749j2.execute-api.ap-southeast-2.amazonaws.com/staging/reports/syndrome/?syndrome=a",
+									"protocol": "https",
+									"host": [
+										"6u977749j2",
+										"execute-api",
+										"ap-southeast-2",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"staging",
+										"reports",
+										"syndrome",
+										""
+									],
+									"query": [
+										{
+											"key": "syndrome",
+											"value": "a"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"const jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Valid Response\", function () {",
+							"     pm.response.to.be.notFound;",
+							"});",
+							"pm.test(\"Is Object\", () => {",
+							"    //errors array is empty",
+							"    pm.expect(jsonData).to.be.an('object');",
+							"});",
+							"pm.test(\"No Results Found\", () =>{",
+							"    console.log(jsonData.message);",
+							"    pm.expect(jsonData.message).to.equal(\"No results found\");",
+							"})"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Code 502: Bad Gateway",
+			"item": [],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"const jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Valid Response\", function () {",
+							"     pm.response.to.be.serverError;",
+							"});",
+							"pm.test(\"Is Object\", () => {",
+							"    //errors array is empty",
+							"    pm.expect(jsonData).to.be.an('object');",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Code 200: OK",
+			"item": [
+				{
+					"name": "Search Reports based on Terms &OR Period &OR Location",
+					"item": [
+						{
+							"name": "Search Reports with Terms Single Lower Case",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonArray = pm.response.json();\r",
+											"let logs = jsonArray.splice(jsonArray.indexOf('logs'));\r",
+											"console.log(jsonArray);\r",
+											"\r",
+											"\r",
+											"pm.collectionVariables.set(\"testResponse\", jsonArray);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://6u977749j2.execute-api.ap-southeast-2.amazonaws.com/staging/reports?terms=fever",
+									"protocol": "https",
+									"host": [
+										"6u977749j2",
+										"execute-api",
+										"ap-southeast-2",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"staging",
+										"reports"
+									],
+									"query": [
+										{
+											"key": "terms",
+											"value": "fever"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Search Reports with Terms Single UpperCase",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonArray = pm.response.json();\r",
+											"let logs = jsonArray.splice(jsonArray.indexOf('logs'));\r",
+											"console.log(jsonArray);\r",
+											"//Now we only have articles\r",
+											"\r",
+											"\r",
+											"pm.test(\"Test Upper Case Input Returns Same Results As Lower\", () => {\r",
+											"    pm.test(\"compare responses\", () => {\r",
+											"        let testResponse = pm.collectionVariables.get(\"testResponse\");\r",
+											"        console.log(testResponse);\r",
+											"        pm.expect(jsonArray).to.deep.equal(testResponse);\r",
+											"    });\r",
+											"    //pm.collectionVariables.unset(\"testResponse\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://6u977749j2.execute-api.ap-southeast-2.amazonaws.com/staging/reports?terms=FEvER",
+									"protocol": "https",
+									"host": [
+										"6u977749j2",
+										"execute-api",
+										"ap-southeast-2",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"staging",
+										"reports"
+									],
+									"query": [
+										{
+											"key": "terms",
+											"value": "FEvER"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Search Reports with Location LowerCase",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonArray = pm.response.json();\r",
+											"let logs = jsonArray.splice(jsonArray.indexOf('logs'));\r",
+											"console.log(jsonArray);\r",
+											"\r",
+											"\r",
+											"pm.collectionVariables.set(\"testResponse\", jsonArray);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://6u977749j2.execute-api.ap-southeast-2.amazonaws.com/staging/reports?location=australia",
+									"protocol": "https",
+									"host": [
+										"6u977749j2",
+										"execute-api",
+										"ap-southeast-2",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"staging",
+										"reports"
+									],
+									"query": [
+										{
+											"key": "location",
+											"value": "australia"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Search Reports with Location UpperCase",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonArray = pm.response.json();\r",
+											"let logs = jsonArray.splice(jsonArray.indexOf('logs'));\r",
+											"console.log(jsonArray);\r",
+											"//Now we only have articles\r",
+											"\r",
+											"\r",
+											"pm.test(\"Test Upper Case Input Returns Same Results As Lower\", () => {\r",
+											"    pm.test(\"compare responses\", () => {\r",
+											"        let testResponse = pm.collectionVariables.get(\"testResponse\");\r",
+											"        console.log(testResponse);\r",
+											"        pm.expect(jsonArray).to.deep.equal(testResponse);\r",
+											"    });\r",
+											"    //pm.collectionVariables.unset(\"testResponse\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://6u977749j2.execute-api.ap-southeast-2.amazonaws.com/staging/reports?location=Australia",
+									"protocol": "https",
+									"host": [
+										"6u977749j2",
+										"execute-api",
+										"ap-southeast-2",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"staging",
+										"reports"
+									],
+									"query": [
+										{
+											"key": "location",
+											"value": "Australia"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Search Reports with Period",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://6u977749j2.execute-api.ap-southeast-2.amazonaws.com/staging/reports?start_date=2021-03-08T13:06:00&end_date=2021-03-10T13:08:00",
+									"protocol": "https",
+									"host": [
+										"6u977749j2",
+										"execute-api",
+										"ap-southeast-2",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"staging",
+										"reports"
+									],
+									"query": [
+										{
+											"key": "start_date",
+											"value": "2021-03-08T13:06:00"
+										},
+										{
+											"key": "end_date",
+											"value": "2021-03-10T13:08:00"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Search Reports with Location and Period",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://6u977749j2.execute-api.ap-southeast-2.amazonaws.com/staging/reports?location=Australia&start_date=2021-03-08T13:06:00&end_date=2021-03-10T13:06:00",
+									"protocol": "https",
+									"host": [
+										"6u977749j2",
+										"execute-api",
+										"ap-southeast-2",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"staging",
+										"reports"
+									],
+									"query": [
+										{
+											"key": "location",
+											"value": "Australia"
+										},
+										{
+											"key": "start_date",
+											"value": "2021-03-08T13:06:00"
+										},
+										{
+											"key": "end_date",
+											"value": "2021-03-10T13:06:00"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Search Reports with Location and Terms",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://6u977749j2.execute-api.ap-southeast-2.amazonaws.com/staging/reports?terms=Fever&location=Australia",
+									"protocol": "https",
+									"host": [
+										"6u977749j2",
+										"execute-api",
+										"ap-southeast-2",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"staging",
+										"reports"
+									],
+									"query": [
+										{
+											"key": "terms",
+											"value": "Fever"
+										},
+										{
+											"key": "location",
+											"value": "Australia"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Search Reports with Location and Terms and Period",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://6u977749j2.execute-api.ap-southeast-2.amazonaws.com/staging/reports?terms=Fever&location=Australia&start_date=2021-03-08T13:06:00&end_date=2021-03-10T13:06:00",
+									"protocol": "https",
+									"host": [
+										"6u977749j2",
+										"execute-api",
+										"ap-southeast-2",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"staging",
+										"reports"
+									],
+									"query": [
+										{
+											"key": "terms",
+											"value": "Fever"
+										},
+										{
+											"key": "location",
+											"value": "Australia"
+										},
+										{
+											"key": "start_date",
+											"value": "2021-03-08T13:06:00"
+										},
+										{
+											"key": "end_date",
+											"value": "2021-03-10T13:06:00"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Search Reports with Terms Multiple",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://6u977749j2.execute-api.ap-southeast-2.amazonaws.com/staging/reports?terms=infection,Fever",
+									"protocol": "https",
+									"host": [
+										"6u977749j2",
+										"execute-api",
+										"ap-southeast-2",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"staging",
+										"reports"
+									],
+									"query": [
+										{
+											"key": "terms",
+											"value": "infection,Fever"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Search Reports based on Disease",
+					"item": [
+						{
+							"name": "Search Reports with Disease Single LowerCase",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonArray = pm.response.json();\r",
+											"let logs = jsonArray.splice(jsonArray.indexOf('logs'));\r",
+											"console.log(jsonArray);\r",
+											"\r",
+											"\r",
+											"pm.collectionVariables.set(\"testResponse\", jsonArray);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://6u977749j2.execute-api.ap-southeast-2.amazonaws.com/staging/reports/disease/?disease=covid-19",
+									"protocol": "https",
+									"host": [
+										"6u977749j2",
+										"execute-api",
+										"ap-southeast-2",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"staging",
+										"reports",
+										"disease",
+										""
+									],
+									"query": [
+										{
+											"key": "disease",
+											"value": "covid-19"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Search Reports with Disease Single UpperCase",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonArray = pm.response.json();\r",
+											"let logs = jsonArray.splice(jsonArray.indexOf('logs'));\r",
+											"console.log(jsonArray);\r",
+											"//Now we only have articles\r",
+											"\r",
+											"\r",
+											"pm.test(\"Test Upper Case Input Returns Same Results As Lower\", () => {\r",
+											"    pm.test(\"compare responses\", () => {\r",
+											"        let testResponse = pm.collectionVariables.get(\"testResponse\");\r",
+											"        console.log(testResponse);\r",
+											"        pm.expect(jsonArray).to.deep.equal(testResponse);\r",
+											"    });\r",
+											"    //pm.collectionVariables.unset(\"testResponse\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://6u977749j2.execute-api.ap-southeast-2.amazonaws.com/staging/reports/disease/?disease=COVID-19",
+									"protocol": "https",
+									"host": [
+										"6u977749j2",
+										"execute-api",
+										"ap-southeast-2",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"staging",
+										"reports",
+										"disease",
+										""
+									],
+									"query": [
+										{
+											"key": "disease",
+											"value": "COVID-19"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Search Reports based on Syndrome",
+					"item": [
+						{
+							"name": "Search Reports with Syndrome Single LowerCase",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonArray = pm.response.json();\r",
+											"let logs = jsonArray.splice(jsonArray.indexOf('logs'));\r",
+											"console.log(jsonArray);\r",
+											"\r",
+											"\r",
+											"pm.collectionVariables.set(\"testResponse\", jsonArray);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://6u977749j2.execute-api.ap-southeast-2.amazonaws.com/staging/reports/syndrome/?syndrome=encephalitis",
+									"protocol": "https",
+									"host": [
+										"6u977749j2",
+										"execute-api",
+										"ap-southeast-2",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"staging",
+										"reports",
+										"syndrome",
+										""
+									],
+									"query": [
+										{
+											"key": "syndrome",
+											"value": "encephalitis"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Search Reports with Syndrome Single UpperCase",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonArray = pm.response.json();\r",
+											"let logs = jsonArray.splice(jsonArray.indexOf('logs'));\r",
+											"console.log(jsonArray);\r",
+											"//Now we only have articles\r",
+											"\r",
+											"\r",
+											"pm.test(\"Test Upper Case Input Returns Same Results As Lower\", () => {\r",
+											"    pm.test(\"compare responses\", () => {\r",
+											"        let testResponse = pm.collectionVariables.get(\"testResponse\");\r",
+											"        console.log(testResponse);\r",
+											"        pm.expect(jsonArray).to.deep.equal(testResponse);\r",
+											"    });\r",
+											"    //pm.collectionVariables.unset(\"testResponse\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://6u977749j2.execute-api.ap-southeast-2.amazonaws.com/staging/reports/syndrome/?syndrome=ENCEPHALITIS",
+									"protocol": "https",
+									"host": [
+										"6u977749j2",
+										"execute-api",
+										"ap-southeast-2",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"staging",
+										"reports",
+										"syndrome",
+										""
+									],
+									"query": [
+										{
+											"key": "syndrome",
+											"value": "ENCEPHALITIS"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"const jsonData = pm.response.json();",
+							"",
+							"",
+							"pm.test(\"Valid Response\", function () {",
+							"     pm.response.to.be.ok;",
+							"});",
+							"pm.test(\"Is Array\", () => {",
+							"    //errors array is empty",
+							"    pm.expect(jsonData).to.be.an('array');",
+							"});",
+							"// pm.test(\"Is Object\", () => {",
+							"//     //errors array is empty",
+							"//     pm.expect(jsonData).to.be.an('object');",
+							"// });",
+							"pm.test(\"The response reports not empty\", () => {",
+							"    //parse the response json and test three properties",
+							"    const responseJsonArray = pm.response.json();",
+							"    const responseJsonObj = responseJsonArray[0];",
+							"    const reports = responseJsonObj.reports;",
+							"    pm.expect(reports).to.be.an(\"array\");",
+							"    pm.expect(reports).to.not.be.empty;",
+							"",
+							"});",
+							"pm.test(\"The response url valid\", () => {",
+							"    //parse the response json and test three properties",
+							"    const responseJsonArray = pm.response.json();",
+							"    const responseJsonObj = responseJsonArray[0];",
+							"    const url = responseJsonObj.url;",
+							"    pm.expect(url).to.be.an(\"string\");",
+							"    pm.expect(url).to.not.be.empty;",
+							"});",
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Code 400: Bad Request",
+			"item": [
+				{
+					"name": "Search Reports based on Terms &OR Period &OR Location",
+					"item": [
+						{
+							"name": "Search Reports with no query",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Error Message Matching\", () =>{\r",
+											"    console.log(jsonData.message);\r",
+											"    pm.expect(jsonData.message).to.equal(\"Please provide a period of interest, key terms, or a location\");\r",
+											"})\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://6u977749j2.execute-api.ap-southeast-2.amazonaws.com/staging/reports?",
+									"protocol": "https",
+									"host": [
+										"6u977749j2",
+										"execute-api",
+										"ap-southeast-2",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"staging",
+										"reports"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Search Reports with Invalid Date",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Error Message Matching\", () =>{\r",
+											"    console.log(jsonData.message);\r",
+											"    pm.expect(jsonData.message).to.equal(\"Invalid start date and/or end date\");\r",
+											"})\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://6u977749j2.execute-api.ap-southeast-2.amazonaws.com/staging/reports?start_date=2015-10-01T08:45:10&end_date=2015-11",
+									"protocol": "https",
+									"host": [
+										"6u977749j2",
+										"execute-api",
+										"ap-southeast-2",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"staging",
+										"reports"
+									],
+									"query": [
+										{
+											"key": "start_date",
+											"value": "2015-10-01T08:45:10"
+										},
+										{
+											"key": "end_date",
+											"value": "2015-11"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Search Reports with only Start Date",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Error Message Matching\", () =>{\r",
+											"    console.log(jsonData.message);\r",
+											"    pm.expect(jsonData.message).to.equal(\"Please enter both start date and end date\");\r",
+											"})\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://6u977749j2.execute-api.ap-southeast-2.amazonaws.com/staging/reports?start_date=2015-10-01T08:45:10",
+									"protocol": "https",
+									"host": [
+										"6u977749j2",
+										"execute-api",
+										"ap-southeast-2",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"staging",
+										"reports"
+									],
+									"query": [
+										{
+											"key": "start_date",
+											"value": "2015-10-01T08:45:10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Search Reports with only End Date",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Error Message Matching\", () =>{\r",
+											"    console.log(jsonData.message);\r",
+											"    pm.expect(jsonData.message).to.equal(\"Please enter both start date and end date\");\r",
+											"})\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://6u977749j2.execute-api.ap-southeast-2.amazonaws.com/staging/reports?end_date=2015-10-01T08:45:10",
+									"protocol": "https",
+									"host": [
+										"6u977749j2",
+										"execute-api",
+										"ap-southeast-2",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"staging",
+										"reports"
+									],
+									"query": [
+										{
+											"key": "end_date",
+											"value": "2015-10-01T08:45:10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Search Reports with End Date before Start Date",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Error Message Matching\", () =>{\r",
+											"    console.log(jsonData.message);\r",
+											"    pm.expect(jsonData.message).to.equal(\"Start date cannot be after end date\");\r",
+											"})\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://6u977749j2.execute-api.ap-southeast-2.amazonaws.com/staging/reports?start_date=2015-11-01T19:37:12&end_date=2015-10-01T08:45:10",
+									"protocol": "https",
+									"host": [
+										"6u977749j2",
+										"execute-api",
+										"ap-southeast-2",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"staging",
+										"reports"
+									],
+									"query": [
+										{
+											"key": "start_date",
+											"value": "2015-11-01T19:37:12"
+										},
+										{
+											"key": "end_date",
+											"value": "2015-10-01T08:45:10"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Search Reports based on Disease",
+					"item": [
+						{
+							"name": "Search Reports with no Disease",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://6u977749j2.execute-api.ap-southeast-2.amazonaws.com/staging/reports/disease/?",
+									"protocol": "https",
+									"host": [
+										"6u977749j2",
+										"execute-api",
+										"ap-southeast-2",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"staging",
+										"reports",
+										"disease",
+										""
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Search Reports with no Disease Params",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://6u977749j2.execute-api.ap-southeast-2.amazonaws.com/staging/reports/disease/?disease=",
+									"protocol": "https",
+									"host": [
+										"6u977749j2",
+										"execute-api",
+										"ap-southeast-2",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"staging",
+										"reports",
+										"disease",
+										""
+									],
+									"query": [
+										{
+											"key": "disease",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Error Message Matching\", () =>{",
+									"    console.log(jsonData.message);",
+									"    pm.expect(jsonData.message).to.equal(\"Please provide a disease to search for\");",
+									"})",
+									"",
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Search Reports based on Syndrome",
+					"item": [
+						{
+							"name": "Search Reports with no Syndrome",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://6u977749j2.execute-api.ap-southeast-2.amazonaws.com/staging/reports/syndrome/?",
+									"protocol": "https",
+									"host": [
+										"6u977749j2",
+										"execute-api",
+										"ap-southeast-2",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"staging",
+										"reports",
+										"syndrome",
+										""
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Search Reports with no Syndrome Params",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://6u977749j2.execute-api.ap-southeast-2.amazonaws.com/staging/reports/syndrome/?syndrome=",
+									"protocol": "https",
+									"host": [
+										"6u977749j2",
+										"execute-api",
+										"ap-southeast-2",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"staging",
+										"reports",
+										"syndrome",
+										""
+									],
+									"query": [
+										{
+											"key": "syndrome",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Error Message Matching\", () =>{",
+									"    console.log(jsonData.message);",
+									"    pm.expect(jsonData.message).to.equal(\"Please provide a syndrome to search for\");",
+									"})",
+									"",
+									""
+								]
+							}
+						}
+					]
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"const jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Valid Response\", function () {",
+							"     pm.response.to.be.badRequest;",
+							"});",
+							"pm.test(\"Is Object\", () => {",
+							"    //errors array is empty",
+							"    pm.expect(jsonData).to.be.an('object');",
+							"});",
+							"",
+							"pm.test(\"Error Message Not Empty\", () =>{",
+							"    console.log(jsonData.message);",
+							"    pm.expect(jsonData.message).to.be.an(\"string\");",
+							"    pm.expect(jsonData.message).to.not.be.empty;",
+							"})"
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.test(\"Has JSON Body\", function () {",
+					"     pm.response.to.be.withBody;",
+					"     pm.response.to.be.json;",
+					"});",
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "variable_key",
+			"value": ""
+		},
+		{
+			"key": "termUpper",
+			"value": ""
+		},
+		{
+			"key": "testResponse",
+			"value": ""
+		}
+	]
+}

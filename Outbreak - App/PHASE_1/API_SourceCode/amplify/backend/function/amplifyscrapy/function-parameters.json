@@ -1,0 +1,25 @@
+{
+  "lambdaLayers": [
+    {
+      "type": "ProjectLayer",
+      "resourceName": "scrapylayer",
+      "version": 4
+    }
+  ],
+  "permissions": {
+    "storage": {
+      "outbreaksDatabase": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "outbreaksDatabaseNew": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  }
+}

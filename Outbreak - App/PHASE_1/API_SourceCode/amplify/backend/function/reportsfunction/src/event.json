@@ -1,0 +1,26 @@
+{
+    "resource": "/reports",
+    "path": "/reports",
+    "httpMethod": "GET",
+    "queryStringParameters": {
+            "end_date": "2021-01-21T00:00:00",
+            "location": "sydney",
+            "start_date": "2020-12-15T00:00:00",
+            "terms": "flu"
+        },
+        "multiValueQueryStringParameters": {
+            "end_date": [
+            "2021-01-21T00:00:00"
+            ],
+            "location": [
+            "sydney"
+            ],
+            "start_date": [
+            "2020-12-15T00:00:00"
+            ],
+            "terms": [
+            "corona,influenza",
+            "flu"
+            ]
+    }
+}

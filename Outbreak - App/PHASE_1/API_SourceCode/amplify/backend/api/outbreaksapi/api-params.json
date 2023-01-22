@@ -1,0 +1,35 @@
+{
+    "paths": [
+        {
+            "name": "/reports",
+            "lambdaFunction": "reportsfunction",
+            "privacy": {
+                "open": true
+            },
+            "policyResourceName": "/reports"
+        }
+    ],
+    "resourceName": "outbreaksapi",
+    "apiName": "outbreaksapi",
+    "functionArns": [
+        {
+            "lambdaFunction": "reportsfunction"
+        }
+    ],
+    "privacy": {
+        "auth": 0,
+        "unauth": 0,
+        "authRoleName": "amplify-gitpushforce-staging-15618-authRole",
+        "unAuthRoleName": "amplify-gitpushforce-staging-15618-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "reportsfunction",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ]
+}
